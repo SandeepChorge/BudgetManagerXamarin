@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:NewRestTest.viewmodel" x:DataType="viewmodels:LoginVM"
+             x:Class="NewRestTest.appview.LoginPage"
+             >
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto,*,Auto" >
+            <Label Text="Login Page"
+                   Grid.Row="0"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand"
+                   Style="{StaticResource HeaderLabelStyle}"
+                   />
+            <Frame Grid.Row="1"
+            HasShadow="True" Margin="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                   BackgroundColor="White"
+                    CornerRadius="30"
+                    >
+
+            <StackLayout Orientation="Vertical" VerticalOptions="Center">
+
+                <Label Text="Username"
+                   Style="{StaticResource InfoLabelStyle}"/>
+                <Entry Placeholder="Username"
+                   Text="{Binding Username}"
+                   Style="{StaticResource EntryStyle}"
+                       WidthRequest="300"/>
+
+                <Label Text="Password"
+                   Style="{StaticResource InfoLabelStyle}"/>
+                <Entry Placeholder="Password"
+                   Text="{Binding Password}"
+                   Style="{StaticResource EntryStyle}"
+                       WidthRequest="300"
+                   IsPassword="True"
+                />
+
+                <Button Text="Login"
+                    Clicked="Button_Clicked"
+                    WidthRequest="200"
+                    HorizontalOptions="Center"
+                        Style="{StaticResource ButtonStyle}"
+                    />
+
+                    <Button Text="SignUp"
+                    Clicked="Signup"
+                    WidthRequest="200"
+                    HorizontalOptions="Center"
+                        Style="{StaticResource ButtonStyle}"
+                        />
+                </StackLayout>
+             
+        </Frame>
+            <Label x:Name="ResultLabel"
+                   Text="{Binding LoginResult}"
+                   TextColor="Black"
+                   FontSize="20"
+                   Grid.Row="2"
+                   Margin="0,0,0,20"
+                   VerticalOptions="Center"
+                HorizontalOptions="CenterAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:NewRestTest.viewmodel"
+             x:Class="NewRestTest.MainPage"
+             >
+    
+    
+    <!--
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Tabs 1" Order="Primary">
+            
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>-->
+    <ScrollView>
+        <StackLayout>
+            <Frame BackgroundColor="{StaticResource PrimaryColor}" Padding="24" CornerRadius="0">
+                <Label Text="Testing RestAPI call in Xamarin" HorizontalTextAlignment="Center" TextColor="Black" FontSize="30"/>
+            </Frame>
+            <Button Text="Call API" WidthRequest="200" HorizontalOptions="Center" FontSize="Title" Padding="30,10,30,10" 
+                    Command="{Binding IncreaseCount}"
+                TextColor="{StaticResource PrimaryTextColor2}"
+                BackgroundColor="{StaticResource PrimaryDark} "/>
+
+            <ListView BackgroundColor="Transparent" ItemsSource="{Binding ProductListDetails}"
+                      HasUnevenRows="True"
+                      Margin="5"
+                      SeparatorVisibility="Default"
+                      SeparatorColor="Aqua"
+                      >
+
+                <ListView.ItemTemplate >
+                    <DataTemplate>
+                        <ViewCell >
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Favourite"/>
+                                <MenuItem Text="Delete"/>
+                            </ViewCell.ContextActions>
+                            <Frame CornerRadius="20"
+                                   HasShadow="True"
+                                   >
+                                <StackLayout>
+                                <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,1.0*" Padding="5"
+                              >
+                                    <Image Source="{Binding image}" WidthRequest="100" HeightRequest="100"/>
+                                    <StackLayout HorizontalOptions="Fill" Grid.Row="0" 
+                                       Grid.Column="1" >
+                                        <Grid RowDefinitions="Auto,Auto,1*" ColumnDefinitions="1.0*,1.0*,1.0*" Padding="5"
+                              >
+                                            <!---->
+                                            <Label Text="{Binding title}" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor}" 
+                                       FontSize="Default"
+                                       Grid.Row="0" 
+                                       Grid.ColumnSpan="3" 
+                                       />
+                                            <Label Text="{Binding price,StringFormat='{0} Rs.'}" HorizontalOptions="EndAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryDark}" 
+                                       FontSize="Default"
+                                       Grid.Row="0" 
+                                       Grid.Column="3"
+                                       />
+                                            <Label Text="{Binding category}" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor}" 
+                                       FontSize="Default"
+                                       Grid.Row="1" 
+                                       Grid.Column="0" 
+                                       />
+                                            <Label Text="{Binding description}" HorizontalOptions="EndAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryDark}" 
+                                       FontSize="Small"
+                                       Grid.Row="2" 
+                                       Grid.ColumnSpan="3" 
+                                   MaxLines="2"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

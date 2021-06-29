@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NewRestTest.appview.ProfilePage">
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout Orientation="Vertical">
+
+            <StackLayout Orientation="Vertical"
+                         HeightRequest="250">
+                    <Grid>
+                <Image Source="back1.jpg"
+                       Aspect="AspectFill"
+                       HorizontalOptions="FillAndExpand"
+                       />
+                    </Grid>
+                    <Label Text="Profile" TextColor="Black"
+                       Margin="50,-200,10,0"
+                       FontSize="30"
+                       CharacterSpacing="2"
+                       HorizontalOptions="Start"
+                       />
+            </StackLayout>
+
+            <Frame HasShadow="True" CornerRadius="50"
+                   Margin="10,-80,10,0"
+
+                   >
+                <StackLayout >
+                    <Frame HasShadow="True" CornerRadius="30">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Text="{Binding UserName}" 
+                               TextColor="{StaticResource PrimaryColor}"
+                                 FontSize="20"
+                                   HorizontalOptions="Start"
+                                   Grid.Column="0"/>
+                            <!--<Line Style="{StaticResource ProfileLineStyle}"/>-->
+                            <Image Source="manage_profile.png" 
+                                   WidthRequest="30"
+                                   HeightRequest="30"
+                                   HorizontalOptions="End"
+                                   Grid.Column="2"
+                                   />
+                        </Grid>
+                    </Frame>
+
+
+                    <Frame HasShadow="True" CornerRadius="30">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Text="{Binding MobileNumber}"  
+                               TextColor="{StaticResource PrimaryColor}"
+                                 FontSize="16"
+                                   HorizontalOptions="Start"
+                                   Grid.Column="0"/>
+                            <!--<Line Style="{StaticResource ProfileLineStyle}"/>-->
+
+                            <Image Source="phone.png" 
+                                   WidthRequest="30"
+                                   HeightRequest="30"
+                                   HorizontalOptions="End"
+                                   Grid.Column="2"
+                                   />
+                        </Grid>
+                    </Frame>
+
+
+                    <Frame HasShadow="True" CornerRadius="30">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Text="{Binding EmailID}"  
+                               TextColor="{StaticResource PrimaryColor}"
+                                 FontSize="16"
+                                   HorizontalOptions="Start"
+                                   Grid.Column="0"/>
+                            <!--<Line Style="{StaticResource ProfileLineStyle}"/>-->
+
+                            <Image Source="message.png" 
+                                   WidthRequest="30"
+                                   HeightRequest="30"
+                                   HorizontalOptions="End"
+                                   Grid.Column="2"
+                                   />
+                        </Grid>
+                    </Frame>
+                   
+                    <Frame 
+                   HasShadow="True" Padding="5"
+                    CornerRadius="10" HorizontalOptions="End"
+                        >
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Tapped="LogoutTapped"
+                                    NumberOfTapsRequired="1"
+                                    ></TapGestureRecognizer>
+                            </Frame.GestureRecognizers>
+                            <StackLayout Orientation="Horizontal"
+                             WidthRequest="120">
+                                <Image Source="logout.png" 
+                               WidthRequest="45"
+                           HeightRequest="45"
+                                   />
+                    <Label Text="Logout"
+                            Style="{StaticResource DashboardLblStyle}"
+                       />
+                </StackLayout>
+            </Frame>
+
+        </StackLayout>
+        </Frame>
+
+            <BoxView
+                BackgroundColor="Transparent"
+                VerticalOptions="CenterAndExpand"></BoxView>
+
+
+                <Label Text="{Binding CreatedOn}"
+                   TextColor="Black"
+                       Margin="20"
+                       FontSize="12"
+                       CharacterSpacing="2"
+                       VerticalOptions="End"
+                       HorizontalOptions="End"
+                       />
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

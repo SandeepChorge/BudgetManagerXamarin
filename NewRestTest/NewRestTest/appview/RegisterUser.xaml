@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:NewRestTest.utils"
+             x:Class="NewRestTest.appview.RegisterUser">
+    <ContentPage.Resources>
+        <ControlTemplate x:Key="RadioButtonTemplate">
+            <Frame BorderColor="#F3F2F1"
+                   BackgroundColor="#F3F2F1"
+                   HasShadow="True"
+                   HeightRequest="130"
+                   WidthRequest="130"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start"
+                   Padding="0" 
+                   CornerRadius="20">
+
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CheckedStates">
+                            <VisualState x:Name="Checked">
+                                <VisualState.Setters >
+                                    <Setter Property="BorderColor"
+                                            Value="#FF3300" />
+                                    <Setter TargetName="check"
+                                            Property="Opacity"
+                                            Value="1"  />
+
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Unchecked">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="White" />
+                                    <Setter Property="BorderColor"
+                                            Value="White" />
+                                    <Setter TargetName="check"
+                                            Property="Opacity"
+                                            Value="0" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+                <Grid Margin="4"
+                      WidthRequest="100">
+                    <Grid WidthRequest="18"
+                          HeightRequest="18"
+                          HorizontalOptions="End"
+                          VerticalOptions="Start">
+                        <Ellipse Stroke="Blue"
+                                 Fill="White"
+                                 WidthRequest="16"
+                                 HeightRequest="16"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center" />
+                        <Ellipse x:Name="check"
+                                 Fill="Blue"
+                                 WidthRequest="8"
+                                 HeightRequest="8"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center" />
+                    </Grid>
+                    <ContentPresenter />
+                </Grid>
+            </Frame>
+        </ControlTemplate>
+
+
+        <Style TargetType="RadioButton">
+            <Setter Property="ControlTemplate"
+                    Value="{StaticResource RadioButtonTemplate}" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView Orientation="Vertical">
+
+            <Frame HasShadow="True" Margin="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                   BackgroundColor="White"
+                    CornerRadius="30"
+                    >
+            <StackLayout>
+            
+            <Label Text="Add New User"
+                   FontSize="30"
+                   HorizontalOptions="CenterAndExpand"
+                   TextColor="Black"
+                   />
+
+            <Label Text="Name"
+                   Style="{StaticResource InfoLabelStyle}"/>
+            <Entry x:Name="Name" Placeholder="Enter Name"
+                   Style="{StaticResource EntryStyle}"/>
+
+
+            <Label Text="Mobile Number"
+                   Style="{StaticResource InfoLabelStyle}"/>
+                    <Entry x:Name="MobileNumber" Placeholder="Mobile Number"
+                   Style="{StaticResource EntryStyle}"
+                   MaxLength="10"
+                   Keyboard="Numeric">
+                        <Entry.Behaviors>
+                            <local:NumberValidationBehavior/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="Email"
+                   Style="{StaticResource InfoLabelStyle}"/>
+            <Entry x:Name="Email" Placeholder="Enter Email Address"
+                   Style="{StaticResource EntryStyle}"
+                   Keyboard="Email"/>
+
+                    <Label 
+                         Text="Password"
+                   Style="{StaticResource InfoLabelStyle}"/>
+                    <Entry 
+                        x:Name="Password"
+                        Placeholder="Enter Password"
+                           IsPassword="True"
+                   Style="{StaticResource EntryStyle}"
+                   />
+
+                    <Label Text="Choose Gender"
+                   Style="{StaticResource InfoLabelStyle}"/>
+                    <StackLayout x:Name="Gender"
+                                 RadioButtonGroup.GroupName="gender"
+                                 RadioButtonGroup.SelectedValue="{Binding Selection}"
+                         >
+
+              <!--  <RadioButton 
+                             HorizontalOptions="Center"
+                             VerticalOptions="CenterAndExpand">
+                    <RadioButton.Content>
+                        <Image Source="male.png" 
+                               />
+                    </RadioButton.Content>
+                </RadioButton>-->
+                <Grid RowDefinitions="Auto"
+                    ColumnDefinitions="1*,1*,1*">
+                <RadioButton Value="Male" Grid.Column="0">
+                        <RadioButton.Content>
+                            <StackLayout>
+                            <Image Source="male.png" 
+                              HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                                WidthRequest="30"
+                                   HeightRequest="30"
+                                   Margin="0,20,0,30"
+                                   />
+                                <Label Text="Male"
+                                       HorizontalOptions="Center"
+                                         VerticalOptions="End" 
+                                       TextColor="{StaticResource PrimaryTextColor2}"
+                                       />
+                            </StackLayout>
+                        </RadioButton.Content>
+                    </RadioButton>
+                    <RadioButton Value="Female" Grid.Column="1">
+
+                        <RadioButton.Content>
+                            <StackLayout >
+                                <Image Source="female.png" 
+                                 HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                                WidthRequest="30"
+                                   HeightRequest="30"
+                                   Margin="0,20,0,30"
+                                   />
+                                <Label Text="Female"
+                                       HorizontalOptions="Center"
+                                         VerticalOptions="End" 
+                                       TextColor="{StaticResource PrimaryTextColor2}"/>
+                            </StackLayout>
+                        </RadioButton.Content>
+                    </RadioButton>
+                    <RadioButton Value="Rather Not Say" Grid.Column="2">
+                        <RadioButton.Content>
+                            <StackLayout>
+                                <Image Source="rather_not_say.png" 
+                                 HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                                WidthRequest="30"
+                                   HeightRequest="30"
+                                   Margin="0,20,0,30"
+                                   />
+                                <Label Text="Rather Not Say"
+                                       HorizontalOptions="Center"
+                                         VerticalOptions="End" 
+                                       TextColor="{StaticResource PrimaryTextColor2}"/>
+                            </StackLayout>
+                        </RadioButton.Content>
+                    </RadioButton>
+                </Grid>
+            </StackLayout>
+
+
+                    <Button Text="Add User"
+                        HorizontalOptions="End"
+                             Style="{StaticResource ButtonStyle}"
+                            Clicked="ValidateUserAsync"
+                   />
+
+
+                    
+
+
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>

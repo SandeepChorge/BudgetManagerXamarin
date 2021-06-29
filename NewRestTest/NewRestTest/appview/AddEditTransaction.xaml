@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NewRestTest.appview.AddEditTransaction">
+    <ContentPage.Content>
+        <Frame HasShadow="True" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <StackLayout >
+
+            
+                <StackLayout Orientation="Horizontal"
+                        >
+                    <Frame HasShadow="True" Margin="10">
+                        <Image Source="income.png" 
+                                WidthRequest="75"
+                                   HeightRequest="75"
+                                   />
+                    </Frame>
+                    
+                    <Label x:Name="HeaderLabel" 
+                           Text="Manage Transaction"
+                           TextColor="Black"
+                           FontSize="25"
+                           CharacterSpacing="1.2"
+                          Grid.Column="1"
+                           Grid.Row="2"
+                           VerticalOptions="CenterAndExpand"
+                           />
+            </StackLayout>
+                <StackLayout
+                    Orientation="Vertical">
+
+                    <Label Text="Transaction Amount"
+                   Style="{StaticResource InfoLabelStyle}"/>
+                    <Entry x:Name="TransactionAmt" Placeholder="Enter Transaction Amount"
+                   Style="{StaticResource EntryStyle}"
+                   Keyboard="Numeric"/>
+
+
+                    <Label Text="Message"
+                   Style="{StaticResource InfoLabelStyle}"/>
+                    <Entry x:Name="Message" Placeholder="Enter Transaction Message"
+                   Style="{StaticResource EntryStyle}"/>
+
+
+                    <Picker x:Name="TransactionType"
+        Title="Select Transaction Type"
+        TitleColor="{StaticResource PrimaryColor}"
+                            TextColor="{StaticResource PrimaryColor}" SelectedIndex="1"
+                           >
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String >Income</x:String>
+                                <x:String>Expense</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                        <!-- ItemsSource="{Binding TransactionTypes}"
+                            ItemDisplayBinding="{Binding Type}"-->
+                    </Picker>
+
+
+                    <Button x:Name="AddEditTranBtn"
+                            Text="Add Transaction"
+                        HorizontalOptions="End"
+                             Style="{StaticResource ButtonStyle}"
+                            Clicked="AddEditTransaction_Clicked"/>
+                </StackLayout>
+        </StackLayout>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

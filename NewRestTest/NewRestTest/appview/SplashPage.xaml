@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NewRestTest.appview.SplashPage">
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,Auto,*" ColumnDefinitions="*,Auto,*">
+            <!--<StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Orientation="Vertical">
+                <forms:AnimationView  x:Name="animationView" 
+                                      AnimationSource="EmbeddedResource"
+                                      Animation="Resources.splash.json"
+                                      RepeatMode="Restart"
+                                      AutoPlay="True" WidthRequest="400" HeightRequest="400"/>
+            </StackLayout>-->
+
+            <Frame  Grid.Row="1"
+                   Grid.Column="1"
+                    Padding="30"
+                    BackgroundColor="Beige"
+                    CornerRadius="30"
+                    HasShadow="True"
+                    >
+            <Label 
+               
+                Text="TApp"
+                   FontSize="40"
+                   FontAttributes="Bold"
+                   TextColor="Blue"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                  />
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
