@@ -26,6 +26,7 @@ namespace NewRestTest.appview
             dbh = App.getMainDatabase;
            
             BindingContext = this;
+            
 		}
 
 		string _Selection;
@@ -80,6 +81,7 @@ namespace NewRestTest.appview
                     AppSettings.MakeToast("User added successfully");
                     //Application.Current.MainPage = new NavigationPage(new LoginPage());
                     Debug.WriteLine("Insert Result is " + val);
+                    Application.Current.MainPage = new LoginPage();
                 }
             }
         }

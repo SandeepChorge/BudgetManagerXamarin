@@ -1,4 +1,6 @@
-﻿using NewRestTest.viewmodel;
+﻿using NewRestTest.model;
+using NewRestTest.utils;
+using NewRestTest.viewmodel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,21 @@ namespace NewRestTest.appview
             BindingContext = model;
         }
 
+       
         private void Button_Clicked(object sender, EventArgs e)
         {
             model.AddTempData();
         }
+
+        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var myListView = (ListView)sender;
+            BudgetListModel b = (BudgetListModel)myListView.SelectedItem;
+            //AppSettings.MakeLog("ERR", "->" + e.GetType());
+            //AppSettings.MakeLog("ERR", "->" +e.GetType() );
+            // Budget b = e.SelectedItem as Budget;
+            Navigation.PushAsync(new BudgetDetailPage(b.BudgetId));
+        }
+
     }
 }

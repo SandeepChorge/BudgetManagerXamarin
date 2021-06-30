@@ -136,7 +136,7 @@
                 </RadioButton>-->
                 <Grid RowDefinitions="Auto"
                     ColumnDefinitions="1*,1*,1*">
-                <RadioButton Value="Male" Grid.Column="0">
+                <RadioButton Value="Male" Grid.Column="0" >
                         <RadioButton.Content>
                             <StackLayout>
                             <Image Source="male.png" 

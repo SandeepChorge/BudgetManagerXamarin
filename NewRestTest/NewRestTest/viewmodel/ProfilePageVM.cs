@@ -14,7 +14,7 @@ namespace NewRestTest.viewmodel
 
         public ProfilePageVM()
         {
-            UserId = AppSettings.USER_ID;
+            UserId = PrefManager.getUserID();
             GetData();
         }
 

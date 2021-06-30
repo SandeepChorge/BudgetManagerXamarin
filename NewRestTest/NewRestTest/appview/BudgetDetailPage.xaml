@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NewRestTest.appview.BudgetDetailPage"
+             xmlns:viewmodel="clr-namespace:NewRestTest.viewmodel"
+             xmlns:model="clr-namespace:NewRestTest.model"
+             x:DataType="viewmodel:BudgetDetailPageVM">
+    <ContentPage.Content>
+        <StackLayout>
+            <!--Budget Detail Header-->
+            <Frame CornerRadius="10"
+                                   HasShadow="True"
+                                   Margin="5"
+                   
+                                   >
+                <StackLayout Orientation="Vertical" >
+
+                    <Label Text="{Binding BudgetName}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" TextColor="{StaticResource PrimaryTextColor2}" 
+                                       FontSize="20"
+                                               CharacterSpacing="1"
+                                       />
+
+                    <Grid HeightRequest="100">
+                        <Label Text="Income" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" 
+                       Grid.Column="0" Grid.Row="0" 
+                       FontSize="12"/>
+
+                        <Label Text="{Binding TotalIncome,StringFormat='{0} Rs.'}"
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" 
+                                               TextColor="Green" 
+                                                Grid.Column="0" Grid.Row="1"                                           
+                                               CharacterSpacing="1.5"
+                       FontSize="18"
+                                       />
+
+                        <Label Text="Expense" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" 
+                       Grid.Column="1" Grid.Row="0" 
+                       FontSize="12"/>
+
+                        <Label Text="{Binding TotalExpense,StringFormat='{0} Rs.'}"
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" 
+                                               TextColor="Red" 
+                                       Grid.Column="1" Grid.Row="1"
+                                                   CharacterSpacing="1.5"
+                                    FontSize="18"       
+                                       />
+
+                    </Grid>
+
+                    <Button Margin="5" Text="Add new Transaction" Clicked="Button_Clicked"/>
+                </StackLayout>
+            </Frame>
+
+          
+
+            <!--Budget Income and Expense Transactions-->
+
+
+            <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="TransactionType"
+                         Margin="5"  VerticalOptions="CenterAndExpand">
+                <RadioButton x:Name="Income"  Content="Income" CheckedChanged="RadioButton_CheckedChanged" IsChecked="True" 
+                             BorderWidth="1"
+                             Padding="10"
+                             BorderColor="{StaticResource PrimaryColor}"
+                             CharacterSpacing="1.2"
+                             BackgroundColor="White"
+                             CornerRadius="10"
+                             />
+                <RadioButton x:Name="Expense" Content="Expense" CheckedChanged="RadioButton_CheckedChanged"
+                             BorderColor="{StaticResource PrimaryColor}"
+                             BorderWidth="1"
+                             Padding="10"
+                             CharacterSpacing="1.2"
+                             BackgroundColor="White"
+                             CornerRadius="10"/>
+            </StackLayout>
+          
+                   
+                            <ListView BackgroundColor="Transparent" ItemsSource="{Binding Transactions}"
+                      HasUnevenRows="True"
+                      Margin="5"
+                      SeparatorVisibility="Default"
+                      SeparatorColor="Aqua"
+                      VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="CenterAndExpand"
+                      >
+                                <ListView.ItemTemplate >
+                                    <DataTemplate  x:DataType="model:Transaction">
+                                        <ViewCell >
+                                            <Frame CornerRadius="10"
+                                   HasShadow="True"
+                                   Margin="2"
+                                   >
+                                                <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="StartAndExpand">
+
+                                    <Grid >
+                                        <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="StartAndExpand">
+                                            <Label Text="{Binding Message}" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor2}" 
+                                       
+                                            />
+                                           
+                                            <Label  Text="{Binding DateAdded,StringFormat='Added On {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" TextColor="{StaticResource PrimaryTextColor2}" 
+                                       FontSize="10"
+                                       />
+                                        </StackLayout>
+
+                                        <Label Text="{Binding Amount,StringFormat='{0} Rs.'}"
+                                               HorizontalOptions="End" 
+                                               VerticalOptions="Start" 
+                                               FontAttributes="Bold"                            
+                                               CharacterSpacing="1"
+                                               Grid.Column="1" Grid.Row="0"/>
+
+                                    </Grid>
+                                   
+                                                </StackLayout>
+
+                                            </Frame>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                    
+
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>

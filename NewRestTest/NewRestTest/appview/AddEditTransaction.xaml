@@ -42,6 +42,24 @@
                    Style="{StaticResource EntryStyle}"/>
 
 
+                    <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="TransactionType"
+                         Margin="5"  VerticalOptions="CenterAndExpand">
+                        <RadioButton x:Name="Income"  Content="Income" CheckedChanged="RadioButton_CheckedChanged" IsChecked="True" 
+                             BorderColor="{StaticResource PrimaryColor}"
+                             BorderWidth="1"
+                             Padding="10"
+                             CharacterSpacing="1.2"
+                             BackgroundColor="White"
+                             CornerRadius="10"/>
+                        <RadioButton x:Name="Expense" Content="Expense" CheckedChanged="RadioButton_CheckedChanged"
+                             BorderColor="{StaticResource PrimaryColor}"
+                             BorderWidth="1"
+                             Padding="10"
+                             CharacterSpacing="1.2"
+                             BackgroundColor="White"
+                             CornerRadius="10"/>
+                    </StackLayout>
+                    <!--
                     <Picker x:Name="TransactionType"
         Title="Select Transaction Type"
         TitleColor="{StaticResource PrimaryColor}"
@@ -53,10 +71,9 @@
                                 <x:String>Expense</x:String>
                             </x:Array>
                         </Picker.ItemsSource>
-                        <!-- ItemsSource="{Binding TransactionTypes}"
-                            ItemDisplayBinding="{Binding Type}"-->
+                        
                     </Picker>
-
+-->
 
                     <Button x:Name="AddEditTranBtn"
                             Text="Add Transaction"

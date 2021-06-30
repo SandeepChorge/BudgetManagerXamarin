@@ -1,5 +1,6 @@
 ﻿using NewRestTest.database;
 using NewRestTest.model;
+using NewRestTest.utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,10 +19,11 @@ namespace NewRestTest.appview
     {
         ManageTransactionModel manageTransactionModel;
         MainDB dbh;
-       /* List<TransactionType> TransactionTypes = new List<TransactionType>() {
-        new model.TransactionType("Income"),
-        new model.TransactionType("Expense")};*/
+        /* List<TransactionType> TransactionTypes = new List<TransactionType>() {
+         new model.TransactionType("Income"),
+         new model.TransactionType("Expense")};*/
 
+        int SelectedIndex = 1;
         public AddEditTransaction()
         {
             InitializeComponent();
@@ -85,13 +87,14 @@ namespace NewRestTest.appview
                         newTransaction.Message = Message.Text;
                         newTransaction.DateAdded = DateTime.Now.ToString();
                         newTransaction.DateModified = DateTime.Now.ToString();
-                        newTransaction.Type = TransactionType.SelectedIndex == 1 ? 1 : 2;
+                        newTransaction.Type = SelectedIndex;
                         newTransaction.Status = 1;
 
                         IRepository<Transaction> tranRepo = new Repository<Transaction>(dbh.Database);
 
                         int result = await tranRepo.Insert(newTransaction);
                         Debug.WriteLine("Transaction Added Status " + result+"\n On Date "+ DateTime.Now.ToString());
+                        AppSettings.MakeToast("Transaction Added Successfully");
                     }
                     else
                     {//For Updating existing Transaction
@@ -101,16 +104,33 @@ namespace NewRestTest.appview
                         newTransaction.Amount = double.Parse(TransactionAmt.Text);
                         newTransaction.Message = Message.Text;
                         newTransaction.DateModified = "";
-                        newTransaction.Type = TransactionType.SelectedIndex == 1 ? 1 : 2;
+                        //newTransaction.Type = TransactionType.SelectedIndex == 1 ? 1 : 2;
                         newTransaction.Status = 1;
 
                         IRepository<Transaction> tranRepo = new Repository<Transaction>(dbh.Database);
 
                         int result = await tranRepo.Update(newTransaction);
+                        AppSettings.MakeToast("Transaction Modified Successfully");
                     }
+                    await Navigation.PopAsync();
                 }
+
+
             }
 
+        }
+        private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+
+            if (Income.IsChecked)
+            {
+                
+                SelectedIndex = 1;
+            }
+            else
+            {
+                SelectedIndex = 2;
+            }
         }
     }
 }

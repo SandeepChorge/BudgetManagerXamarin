@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodel="clr-namespace:NewRestTest.viewmodel" xmlns:model="clr-namespace:NewRestTest.model" xmlns:converters="clr-namespace:NewRestTest.converter" x:DataType="viewmodel:ViewAllBudgetsVM"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodel="clr-namespace:NewRestTest.viewmodel" 
+             xmlns:model="clr-namespace:NewRestTest.model" 
+             xmlns:converters="clr-namespace:NewRestTest.converter" 
+             x:DataType="viewmodel:ViewAllBudgetsVM"
              x:Class="NewRestTest.appview.ViewAllBudgets">
 
     <ContentPage.Resources>
@@ -24,6 +28,7 @@
                       SeparatorColor="Aqua"
                       VerticalOptions="CenterAndExpand"
 HorizontalOptions="CenterAndExpand"
+                      ItemTapped="ListView_ItemTapped"
                       >
 
                 <ListView.ItemTemplate >
@@ -31,32 +36,65 @@ HorizontalOptions="CenterAndExpand"
                         <ViewCell >
                             <Frame CornerRadius="10"
                                    HasShadow="True"
-                                   Margin="5"
+                                   Margin="2"
                                    >
                                 <StackLayout>
-                                    <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor2}" 
-                                       FontSize="Default"
-                                       />
-                                    <Label Text="{Binding DateModified}" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor2}" 
-                                       FontSize="Default"
-                                       />
-                                    <Label Text="{Binding TotalIncome}" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor2}" 
-                                       FontSize="Default"
-                                       />
-                                    <Label Text="{Binding TotalExpense}" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor2}" 
-                                       FontSize="Default"
-                                       />
 
-                                    <Label  HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor2}" 
-                                       FontSize="Default"
-                                       >
-                                        <Label.Text>
+                                    <Grid >
+                                        <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="StartAndExpand">
+                                            <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor2}" 
+                                            FontSize="20"
+                                            CharacterSpacing="1"/>
+                                            <Label  HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="Gray" 
+                                               FontSize="12">
+                                                <Label.Text>
                                             <MultiBinding Converter="{StaticResource SavingsConverter}">
                                                 <Binding Path="TotalIncome" />
                                                 <Binding Path="TotalExpense" />
                                             </MultiBinding>
                                         </Label.Text>
                                     </Label>
+
+                                    <Label  Text="{Binding DateModified,StringFormat='Last Updated {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" TextColor="{StaticResource PrimaryTextColor2}" 
+                                       FontSize="10"
+                                       />
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="1" Grid.Row="0">
+
+                                            <Grid HorizontalOptions="EndAndExpand">
+                                                <Label Text="Income" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" FontSize="12"
+                                                       FontAttributes="Italic"/>
+
+                                                <Label Text="{Binding TotalIncome,StringFormat='{0} Rs.'}"
+                                               HorizontalOptions="End" 
+                                               VerticalOptions="End" 
+                                               TextColor="Green" 
+                                                       FontAttributes="Bold"
+                                                Grid.Column="0" Grid.Row="1"                                           
+                                               CharacterSpacing="1.5"
+                                       />
+
+                                                <Label Text="Expense" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="0" Grid.Row="2" FontSize="12"
+                                                       FontAttributes="Italic"/>
+
+                                                <Label Text="{Binding TotalExpense,StringFormat='{0} Rs.'}"       
+                                               HorizontalOptions="End" 
+                                               VerticalOptions="End" 
+                                               TextColor="Red" 
+                                                       FontAttributes="Bold"
+                                       Grid.Column="0" Grid.Row="3"
+                                                   CharacterSpacing="1.5"
+                                           
+                                       />
+
+                                            </Grid>
+
+                                        </StackLayout>
+                                    </Grid>
+                                    
+
+                                    
+                                    
                                 </StackLayout>
                             </Frame>
                         </ViewCell>

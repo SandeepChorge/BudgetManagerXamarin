@@ -5,7 +5,8 @@ using System.Text;
 
 namespace NewRestTest.model
 {
-    public class BudgetModels
+    public class 
+        BudgetModels
     {
     }
 

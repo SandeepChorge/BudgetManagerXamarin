@@ -20,8 +20,9 @@ namespace NewRestTest
         {
             InitializeComponent();
             //dbRepo = new MainDB(dbPath);
-            //MainPage = new ProfilePage();
-            MainPage = new ViewAllBudgets();
+            MainPage = new SplashPage();
+            //MainPage = new ViewAllBudgets();
+            //MainPage = new BudgetDetailPage(1);
 
             /*  ManageTransactionModel manageTransactionModel = new ManageTransactionModel() {
                   BudgetId = 1, Type = 2,TransactionId = 1

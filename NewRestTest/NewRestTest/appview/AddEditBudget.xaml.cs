@@ -89,7 +89,9 @@ namespace NewRestTest.appview
                         int result = await budgetRepo.Update(newBudget);
                     AppSettings.MakeToast("Budget Details Modified Successfully");
                 }
-                
+
+                await Navigation.PopAsync();
+
             }
 
         }

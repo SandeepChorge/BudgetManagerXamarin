@@ -1,5 +1,6 @@
 ﻿using NewRestTest.database;
 using NewRestTest.model;
+using NewRestTest.utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,11 +30,11 @@ namespace NewRestTest.viewmodel
 
         internal async void AddTempData()
         {
-            IRepository<Budget> userRepo = new Repository<Budget>(dbh.Database);
+           /* IRepository<Budget> userRepo = new Repository<Budget>(dbh.Database);
 
             List<Budget> alldata = await userRepo.Get<Budget>();
 
-            Debug.WriteLine("budget list size "+alldata.Count);
+            Debug.WriteLine("budget list size "+alldata.Count);*/
 
            
             //addTempData();
@@ -42,9 +43,15 @@ namespace NewRestTest.viewmodel
                @"SELECT b.*,SUM(i.Amount) as TotalIncome,SUM(e.Amount) TotalExpense from
                    budgets b LEFT JOIN transactions i on (b.BudgetId = i.BudgetId AND i.Type = 1)
                     LEFT JOIN transactions e on (b.BudgetId = e.BudgetId AND e.Type = 2)
-                      group by b.BudgetId"));
+                      where b.UserId = ? AND b.Status = 1
+                      group by b.BudgetId",new string[1] { PrefManager.getUserID().ToString()}));
             Debug.WriteLine("Models count "+Models.Count);
             OnPropertyChanged("Budgets");
+        }
+
+        internal void FindIndex(object myItem)
+        {
+            //Debug.WriteLine("Models count " + Models.IndexOf(myItem));
         }
 
         public  void addTempData()

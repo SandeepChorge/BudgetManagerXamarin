@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NewRestTest.utils;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -11,14 +12,31 @@ namespace NewRestTest.converter
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var res = "";
-            if (values[0] != null && values[1] != null && (double)values[1] > 0 && (double)values[0] > 0)
+            double income = 0;
+            double expense = 0;
+            int percent = 0;
+            if (values[0] != null && values[1] != null)
             {
-                res = ((((double)values[1]) / ((double)values[0])) * 100) + " % of Savings Exhausted";
+                income = (double)values[0];
+                expense = (double)values[1];              
+            }
+
+            AppSettings.MakeLog("INCOME " + income, "EXPENSE " + expense);
+            if (income == 0 && expense == 0)
+                res = "No Savings yet";
+            else if (income > 0 && expense < 0)
+                res = "Yay! 100% Savings";
+            else if ((income < 0 && expense > 0) || (expense>income && income <=0))
+                res = "No Savings yet";
+            else if(expense > income)
+            {
+                percent = (int)((income / expense) * 100);
+                res = "You have exceeded "+percent+" % of your Savings";
             }
             else
             {
-                res = "No Savings yet";
-                //$"{values[0]} {values[1]} "$"{values[0]} {values[1]} "
+                percent = (int)((expense / income) * 100);
+                res = percent + " % of Savings Exhausted";
             }
             return res;
         }

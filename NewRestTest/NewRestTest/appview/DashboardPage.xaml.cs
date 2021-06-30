@@ -14,11 +14,17 @@ namespace NewRestTest.appview
     public partial class DashboardPage : ContentPage
     {
         DashboardPageVM model;
+
         public DashboardPage()
         {
             InitializeComponent();
-            model = new DashboardPageVM();
+            model = new DashboardPageVM(Navigation);
             BindingContext = model;
+        }
+
+        public async Task makeCallAsync()
+        {
+            await Navigation.PushAsync(new ViewAllBudgets());
         }
     }
 }

@@ -97,7 +97,7 @@ namespace NewRestTest.viewmodel
             Debug.WriteLine("Reached in ValidateValuesAsync");
             IRepository<UserModel> userRepo = new Repository<UserModel>(dbh.Database);
 
-            List<UserModel> alldata = await userRepo.Get<UserModel>(r => r.Email == Username && r.Password == Password, null);
+            List<UserModel> alldata = await userRepo.Get<UserModel>(r => (r.Email == Username || r.MobileNumber == Username) && r.Password == Password, null);
             if (alldata != null && alldata.Count > 0 )
             {
                 PrefManager.setUserID(alldata[0].Id); 
@@ -105,7 +105,7 @@ namespace NewRestTest.viewmodel
                 Debug.WriteLine("Username "+alldata[0].Name);
                 LoginResult = "Login Success";
                 PrefManager.setIsLoggedIn(true);
-                Application.Current.MainPage = new DashboardPage();
+                Application.Current.MainPage = new NavigationPage(new DashboardPage());
             }
             else
             {

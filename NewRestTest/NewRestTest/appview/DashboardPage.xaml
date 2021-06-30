@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodel="clr-namespace:NewRestTest.viewmodel" x:DataType="viewmodel:DashboardPageVM"
              x:Class="NewRestTest.appview.DashboardPage">
     <ContentPage.Content>
         <ScrollView>
@@ -16,16 +16,19 @@
                     </StackLayout>
                 </Frame>
             
-                <ScrollView Orientation="Horizontal" Margin="10">
+                <ScrollView Orientation="Horizontal" Margin="10" HorizontalScrollBarVisibility="Never">
                 <StackLayout Orientation="Horizontal"
                              >
             <Frame Style="{StaticResource DashboardFrameStyle}"
                    >
-                    <StackLayout Orientation="Horizontal">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding}" Command="{Binding  RBudget}"/>
+                            </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" >
                         <Image Source="budget.png" 
                                  Style="{StaticResource ImageStyle}"
                                    />
-                                <Label Text="Budget"
+                                <Label Text="All Budgets"
                                 Style="{StaticResource DashboardLblStyle}"
                        />
                             </StackLayout>
@@ -33,7 +36,10 @@
 
                 <Frame 
                    Style="{StaticResource DashboardFrameStyle}">
-                    <StackLayout Orientation="Horizontal">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding  RProfile}"/>
+                            </Frame.GestureRecognizers>
+                            <StackLayout Orientation="Horizontal">
                         <Image Source="manage_profile.png" 
                                Style="{StaticResource ImageStyle}"
                                    />
@@ -43,7 +49,22 @@
                     </StackLayout>
                 </Frame>
 
-                       
+                        <Frame 
+                   Style="{StaticResource DashboardFrameStyle}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding  RAddBudget}"/>
+                            </Frame.GestureRecognizers>
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="manage_profile.png" 
+                               Style="{StaticResource ImageStyle}"
+                                   />
+                                <Label Text="Add New Budget"
+                            Style="{StaticResource DashboardLblStyle}"
+                       />
+                            </StackLayout>
+                        </Frame>
+
+
 
                     </StackLayout>
                 </ScrollView>
@@ -54,6 +75,8 @@
                      Grid.Row="2">
             </BoxView>
 
+            
+            <!--
             <Frame Grid.Row="3" Grid.ColumnSpan="2"
                 Style="{StaticResource DashboardFrameStyle}"
                    >
@@ -73,7 +96,7 @@
                        />
                 </StackLayout>
             </Frame>
-
+-->
 
         </StackLayout>
         </ScrollView>
