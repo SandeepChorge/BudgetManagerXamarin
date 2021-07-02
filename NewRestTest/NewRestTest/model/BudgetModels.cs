@@ -78,4 +78,9 @@ namespace NewRestTest.model
         public double TotalExpense { get; set; }
 
     }
+
+
+    public class CarouselItem
+    {        public string Item { get; set; }
+    }
 }

@@ -14,14 +14,14 @@ namespace NewRestTest.converter
             var res = "";
             double income = 0;
             double expense = 0;
-            int percent = 0;
+            double percent = 0;
             if (values[0] != null && values[1] != null)
             {
                 income = (double)values[0];
                 expense = (double)values[1];              
             }
 
-            AppSettings.MakeLog("INCOME " + income, "EXPENSE " + expense);
+            //AppSettings.MakeLog("INCOME " + income, "EXPENSE " + expense);
             if (income == 0 && expense == 0)
                 res = "No Savings yet";
             else if (income > 0 && expense < 0)
@@ -30,13 +30,13 @@ namespace NewRestTest.converter
                 res = "No Savings yet";
             else if(expense > income)
             {
-                percent = (int)((income / expense) * 100);
+                percent = (income / expense) * 100;
                 res = "You have exceeded "+percent+" % of your Savings";
             }
             else
             {
-                percent = (int)((expense / income) * 100);
-                res = percent + " % of Savings Exhausted";
+                percent = (expense / income) * 100;
+                res = percent.ToString("0.00") + " % of Savings Exhausted";
             }
             return res;
         }

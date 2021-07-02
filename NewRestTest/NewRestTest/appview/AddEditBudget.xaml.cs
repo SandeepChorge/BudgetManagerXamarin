@@ -18,6 +18,7 @@ namespace NewRestTest.appview
         MainDB dbh;
         int budgetID = 0;
         string TAG = "AddEditBudget";
+        Budget editBudget;
         public AddEditBudget(int budgetID)
         {
             InitializeComponent();
@@ -41,12 +42,12 @@ namespace NewRestTest.appview
 
                 IRepository<Budget> budgetRepo = new Repository<Budget>(dbh.Database);
 
-                    Budget budget = await budgetRepo.Get(budgetID.ToString());
-                    if (budget != null)
+                editBudget = await budgetRepo.Get(budgetID.ToString());
+                    if (editBudget != null)
                     {
                     AppSettings.MakeLog(TAG, "BudgetId  " + budgetID);
 
-                        Name.Text = budget.Name.ToString();
+                        Name.Text = editBudget.Name.ToString();
                         //TransactionType.SelectedItem = transaction.Amount.ToString();
                     }
                 }
@@ -81,13 +82,19 @@ namespace NewRestTest.appview
                     else
                     {//For Updating existing Transaction
                         Budget newBudget = new Budget();
+                        newBudget.BudgetId = editBudget.BudgetId;
+                        newBudget.UserId = editBudget.UserId;
+                        newBudget.DateAdded = editBudget.DateAdded;
+                        newBudget.Status = 1;
+
+                        //modifying new data and keeping existing as it is
                         newBudget.Name = Name.Text;
-                        newBudget.DateModified = "";
-    
-                        IRepository<Budget> budgetRepo = new Repository<Budget>(dbh.Database);
+                        newBudget.DateModified = DateTime.Now.ToString();
+
+                    IRepository<Budget> budgetRepo = new Repository<Budget>(dbh.Database);
 
                         int result = await budgetRepo.Update(newBudget);
-                    AppSettings.MakeToast("Budget Details Modified Successfully");
+                    AppSettings.MakeToast("Budget Details Modified Successfully "+result);
                 }
 
                 await Navigation.PopAsync();

@@ -1,4 +1,5 @@
-﻿using NewRestTest.utils;
+﻿using NewRestTest.model;
+using NewRestTest.utils;
 using NewRestTest.viewmodel;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,49 @@ namespace NewRestTest.appview
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            model.AddNewTransaction();
+            ManageTransactionModel manageTransactionModel = new ManageTransactionModel
+            {
+                BudgetId = BudgetID,
+                TransactionId = 0,
+                Type = 1
+            };
+            model.AddNewTransaction(manageTransactionModel);
         }
+
+        private async void SwipeItem_Invoked(object sender, EventArgs e)
+        {
+
+            SwipeItem swipe = (SwipeItem)sender;
+            Transaction tran = (Transaction)swipe.CommandParameter;
+           
+            bool isOk =  await DisplayAlert("Edit Transaction","Proceed for Editing Transasction ","Proceed", "Cancel");
+
+            if (isOk) {
+                ManageTransactionModel manageTransactionModel = new ManageTransactionModel
+                {
+                    BudgetId = BudgetID,
+                    TransactionId = tran.TransactionId,
+                    Type = 2
+                };
+                model.AddNewTransaction(manageTransactionModel);
+            }
+
+        }
+
+        
+        private async void SwipeItem_InvokedDelete(object sender, EventArgs e)
+        {
+
+            SwipeItem swipe = (SwipeItem)sender;
+            Transaction tran = (Transaction)swipe.CommandParameter;
+
+            bool isOk = await DisplayAlert("Delete Transaction", "Are you sure for deleting this Transaction?", "Delete", "Cancel");
+
+            if (isOk)
+            {
+                model.DeleteTransaction(tran);
+            }
+        }
+
     }
 }

@@ -1,104 +1,144 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodel="clr-namespace:NewRestTest.viewmodel" x:DataType="viewmodel:DashboardPageVM"
-             x:Class="NewRestTest.appview.DashboardPage">
-    <ContentPage.Content>
-        <ScrollView>
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodel="clr-namespace:NewRestTest.viewmodel" xmlns:model="clr-namespace:NewRestTest.model" x:DataType="viewmodel:DashboardPageVM"
+             x:Class="NewRestTest.appview.DashboardPage" Title="Dashboard">
+    <ContentPage.Content >
+        <ScrollView VerticalScrollBarVisibility="Never">
         <StackLayout Orientation="Vertical">
 
-                <Frame HasShadow="True"
-                       BackgroundColor="{StaticResource PrimaryColor}">
-                    <StackLayout Orientation="Vertical" Padding="20">
+                
+                    <StackLayout Orientation="Vertical" Padding="20"
+                                 BackgroundColor="{StaticResource PrimaryColor}">
                         <Label Text="Hii," TextColor="White"
                                FontSize="25"/>
-                        <Label Text="Sandeep," TextColor="White"
+                    <Label Text="{Binding UserName,StringFormat='{0},'}" TextColor="White"
                                FontSize="25"/>
                     </StackLayout>
-                </Frame>
-            
-                <ScrollView Orientation="Horizontal" Margin="10" HorizontalScrollBarVisibility="Never">
-                <StackLayout Orientation="Horizontal"
+
+
+                <CarouselView x:Name="MyCarousel"
+                              ItemsSource="{Binding CarouselContents}"
+                              HeightRequest="120"
+                                Margin="5"
+                          >
+                    <!--<CarouselView.ItemsSource>
+                        <x:Array Type="{x:Type View}">
+                            <Label Text="Income"/>
+                            <Label Text="Expense"/>
+                        </x:Array>
+                    </CarouselView.ItemsSource>
+                    -->
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate  x:DataType="model:CarouselItem">
+                            <Frame HasShadow="True" 
+                                   Margin="10" 
+                                   CornerRadius="20">
+                                <Label HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="CenterAndExpand"
+                                       CharacterSpacing="1.2"
+                                       TextColor="Blue"
+                                       FontAttributes="Italic"
+                                       Text="{Binding Item}"
+                                       FontSize="16"
+                                       />
+                            </Frame>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+
+                <Grid ColumnDefinitions="Auto,Auto"
                              >
-            <Frame Style="{StaticResource DashboardFrameStyle}"
-                   >
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer CommandParameter="{Binding}" Command="{Binding  RBudget}"/>
-                            </Frame.GestureRecognizers>
-                    <StackLayout Orientation="Horizontal" >
-                        <Image Source="budget.png" 
+                    <Frame Style="{StaticResource DashboardFrameStyle}"
+                           Grid.Row="0" Grid.Column="0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer CommandParameter="{Binding}" Command="{Binding  RBudget}"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout Orientation="Horizontal" >
+                            <Image Source="budget.png" 
                                  Style="{StaticResource ImageStyle}"
                                    />
-                                <Label Text="All Budgets"
+                            <Label Text="All Budgets"
                                 Style="{StaticResource DashboardLblStyle}"
                        />
-                            </StackLayout>
-                </Frame>
+                        </StackLayout>
+                    </Frame>
 
-                <Frame 
-                   Style="{StaticResource DashboardFrameStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding  RProfile}"/>
-                            </Frame.GestureRecognizers>
-                            <StackLayout Orientation="Horizontal">
-                        <Image Source="manage_profile.png" 
+
+                    <Frame 
+                   Style="{StaticResource DashboardFrameStyle}"
+                        Grid.Row="0" Grid.Column="1">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding  RAddBudget}"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="manage_profile.png" 
                                Style="{StaticResource ImageStyle}"
                                    />
-                        <Label Text="Profile Settings"
+                            <Label Text="Add New Budget"
                             Style="{StaticResource DashboardLblStyle}"
                        />
-                    </StackLayout>
-                </Frame>
-
-                        <Frame 
-                   Style="{StaticResource DashboardFrameStyle}">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding  RAddBudget}"/>
-                            </Frame.GestureRecognizers>
-                            <StackLayout Orientation="Horizontal">
-                                <Image Source="manage_profile.png" 
+                        </StackLayout>
+                    </Frame>
+                    
+                    <Frame 
+                   Style="{StaticResource DashboardFrameStyle}"
+                        Grid.Row="1" Grid.Column="0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding  RProfile}"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="manage_profile.png" 
                                Style="{StaticResource ImageStyle}"
                                    />
-                                <Label Text="Add New Budget"
+                            <Label Text="Profile Settings"
                             Style="{StaticResource DashboardLblStyle}"
                        />
-                            </StackLayout>
-                        </Frame>
+                        </StackLayout>
+                    </Frame>
 
 
 
-                    </StackLayout>
-                </ScrollView>
-                <BoxView BackgroundColor="Red"
-                     HeightRequest="150"
-                     HorizontalOptions="Fill"
-                     Grid.ColumnSpan="2"
-                     Grid.Row="2">
-            </BoxView>
 
-            
-            <!--
-            <Frame Grid.Row="3" Grid.ColumnSpan="2"
-                Style="{StaticResource DashboardFrameStyle}"
-                   >
-                <StackLayout Orientation="Vertical">
-                    <Image Source="logout.png" 
-                                 HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                                WidthRequest="75"
-                                   HeightRequest="75"
-                                   Margin="10"
+                    <Frame 
+                   Style="{StaticResource DashboardFrameStyle}"
+                        Grid.Row="1" Grid.Column="1">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding  ManageUsers}"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="manage_profile.png" 
+                               Style="{StaticResource ImageStyle}"
                                    />
-                    <Label Text="Logout"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand"
-                           TextColor="Black"
-                           CharacterSpacing="1.2"
+                            <Label Text="Manage Users"
+                            Style="{StaticResource DashboardLblStyle}"
                        />
-                </StackLayout>
-            </Frame>
--->
+                        </StackLayout>
+                    </Frame>
 
-        </StackLayout>
+                    <Frame 
+                   Style="{StaticResource DashboardFrameStyle}"
+                        Grid.Row="2" Grid.Column="0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding  AddUser}"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="manage_profile.png" 
+                               Style="{StaticResource ImageStyle}"
+                                   />
+                            <Label Text="Add User"
+                            Style="{StaticResource DashboardLblStyle}"
+                       />
+                        </StackLayout>
+                    </Frame>
+
+                </Grid>
+
+
+               
+
+
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

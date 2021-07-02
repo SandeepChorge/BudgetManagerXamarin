@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using NewRestTest.model;
+using NewRestTest.utils;
 using SQLite;
 
 namespace NewRestTest.database
@@ -29,6 +30,17 @@ namespace NewRestTest.database
             conn.CreateTableAsync<UserModel>().Wait();
             conn.CreateTableAsync<Budget>().Wait();
             conn.CreateTableAsync<Transaction>().Wait();
+
+
+            updateBudget();
+        }
+
+        private async void updateBudget()
+        {
+
+            
+            int a = await conn.ExecuteAsync("update budgets set UserId = 1  where BudgetId = 4");
+            AppSettings.MakeLog("HERE ", "UPDATING BUDGET ENTRY "+a);
         }
 
         public async Task AddNewUserAsync(string name)

@@ -24,6 +24,7 @@ namespace NewRestTest.appview
          new model.TransactionType("Expense")};*/
 
         int SelectedIndex = 1;
+        Transaction editTransactionModel;
         public AddEditTransaction()
         {
             InitializeComponent();
@@ -57,10 +58,19 @@ namespace NewRestTest.appview
                     Transaction transaction = await tranRepo.Get(manageTransactionModel.TransactionId.ToString());
                     if (transaction != null)
                     {
+                        editTransactionModel = transaction;
                         Debug.WriteLine("TransactionId  " + transaction.TransactionId+" AMT "+transaction.Amount);
 
                         TransactionAmt.Text = transaction.Amount.ToString();
                         Message.Text = transaction.Message.ToString();
+                        
+                        if(transaction.Type == 1)
+                            Income.IsChecked = true;
+                        else
+                            Expense.IsChecked = true;
+
+                        Income.IsEnabled = false;
+                        Expense.IsEnabled = false;
                         //TransactionType.SelectedItem = transaction.Amount.ToString();
                     }
                 }
@@ -99,20 +109,28 @@ namespace NewRestTest.appview
                     else
                     {//For Updating existing Transaction
                         Transaction newTransaction = new Transaction();
-                        newTransaction.BudgetId = manageTransactionModel.BudgetId;
-                        newTransaction.TransactionId = manageTransactionModel.TransactionId;
+
+                        newTransaction.TransactionId = editTransactionModel.TransactionId;
+                        newTransaction.BudgetId = editTransactionModel.BudgetId;
+                        newTransaction.DateAdded = editTransactionModel.DateAdded;
+                        newTransaction.Type = editTransactionModel.Type;
+                        newTransaction.Status = 1;
+                        
+                        //MOdifying new details and keeping existing details as it is
                         newTransaction.Amount = double.Parse(TransactionAmt.Text);
                         newTransaction.Message = Message.Text;
-                        newTransaction.DateModified = "";
-                        //newTransaction.Type = TransactionType.SelectedIndex == 1 ? 1 : 2;
-                        newTransaction.Status = 1;
-
+                        newTransaction.DateModified = DateTime.Now.ToString();
+                        
                         IRepository<Transaction> tranRepo = new Repository<Transaction>(dbh.Database);
 
                         int result = await tranRepo.Update(newTransaction);
                         AppSettings.MakeToast("Transaction Modified Successfully");
                     }
                     await Navigation.PopAsync();
+                }
+                else
+                {
+                    AppSettings.MakeToast("Something went Wrong");
                 }
 
 

@@ -28,23 +28,26 @@ namespace NewRestTest.viewmodel
             }
         }
 
-        internal async void AddTempData()
+        public async void AddTempData()
         {
            /* IRepository<Budget> userRepo = new Repository<Budget>(dbh.Database);
 
             List<Budget> alldata = await userRepo.Get<Budget>();
 
-            Debug.WriteLine("budget list size "+alldata.Count);*/
+            foreach(Budget b in alldata){
+                Debug.WriteLine("-- "+b.Name+"\ts "+b.Status+"\tu "+b.UserId+"\tid "+b.BudgetId);
+            }*/
+            
 
-           
+
             //addTempData();
-            Debug.WriteLine("Clicked");
+
             Models = new ObservableCollection<BudgetListModel>(await dbh.Database.QueryAsync<BudgetListModel>(
-               @"SELECT b.*,SUM(i.Amount) as TotalIncome,SUM(e.Amount) TotalExpense from
-                   budgets b LEFT JOIN transactions i on (b.BudgetId = i.BudgetId AND i.Type = 1)
-                    LEFT JOIN transactions e on (b.BudgetId = e.BudgetId AND e.Type = 2)
-                      where b.UserId = ? AND b.Status = 1
-                      group by b.BudgetId",new string[1] { PrefManager.getUserID().ToString()}));
+               @"SELECT b.*,
+COALESCE((SELECT SUM(Amount) from transactions where b.BudgetId = BudgetId AND Type = 1 AND Status = 1),0) as TotalIncome,
+COALESCE((SELECT SUM(Amount) from transactions where b.BudgetId = BudgetId AND Type = 2 AND Status = 1),0) TotalExpense 
+from budgets b where b.UserId = ? AND b.Status = 1
+                      ", new string[1] { PrefManager.getUserID().ToString()}));
             Debug.WriteLine("Models count "+Models.Count);
             OnPropertyChanged("Budgets");
         }
@@ -82,9 +85,7 @@ namespace NewRestTest.viewmodel
         public ViewAllBudgetsVM()
         {
             dbh = App.getMainDatabase;
-            AddTempData();
-
-
+            //AddTempData();
             //IRepository<BudgetListModel> userRepo = new Repository<BudgetListModel>(dbh.Database);
         }
     }

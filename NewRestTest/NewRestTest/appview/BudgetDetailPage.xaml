@@ -4,14 +4,20 @@
              x:Class="NewRestTest.appview.BudgetDetailPage"
              xmlns:viewmodel="clr-namespace:NewRestTest.viewmodel"
              xmlns:model="clr-namespace:NewRestTest.model"
-             x:DataType="viewmodel:BudgetDetailPageVM">
+             x:DataType="viewmodel:BudgetDetailPageVM"
+             Title="Budget Detail">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edit Budget"
+                 Order="Primary"
+                 Priority="0"
+                 Command="{Binding EditBudgetCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <!--Budget Detail Header-->
             <Frame CornerRadius="10"
                                    HasShadow="True"
                                    Margin="5"
-                   
                                    >
                 <StackLayout Orientation="Vertical" >
 
@@ -20,7 +26,7 @@
                                                CharacterSpacing="1"
                                        />
 
-                    <Grid HeightRequest="100">
+                    <Grid HeightRequest="150">
                         <Label Text="Income" 
                        HorizontalOptions="Center" 
                        VerticalOptions="Center" 
@@ -28,8 +34,8 @@
                        FontSize="12"/>
 
                         <Label Text="{Binding TotalIncome,StringFormat='{0} Rs.'}"
-                                               HorizontalOptions="Center" 
-                                               VerticalOptions="Center" 
+                                               HorizontalOptions="CenterAndExpand" 
+                                               VerticalOptions="CenterAndExpand" 
                                                TextColor="Green" 
                                                 Grid.Column="0" Grid.Row="1"                                           
                                                CharacterSpacing="1.5"
@@ -43,17 +49,33 @@
                        FontSize="12"/>
 
                         <Label Text="{Binding TotalExpense,StringFormat='{0} Rs.'}"
-                                               HorizontalOptions="Center" 
-                                               VerticalOptions="Center" 
+                                               HorizontalOptions="CenterAndExpand" 
+                                               VerticalOptions="CenterAndExpand" 
                                                TextColor="Red" 
                                        Grid.Column="1" Grid.Row="1"
                                                    CharacterSpacing="1.5"
                                     FontSize="18"       
                                        />
-
                     </Grid>
 
-                    <Button Margin="5" Text="Add new Transaction" Clicked="Button_Clicked"/>
+
+                   
+                    <Label Text="Remaining" 
+                       HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                       FontSize="12"/>
+
+                    <Label Text="{Binding Remaining,StringFormat='{0} Rs.'}"
+                       HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                                               TextColor="Red" 
+                                       Grid.Column="2" Grid.Row="1"
+                                                   CharacterSpacing="1.5"
+                                    FontSize="18"       
+                                       />
+                    
+                    <Button Margin="5,5,5,2" Text="Add new Transaction" Clicked="Button_Clicked"
+                            Style="{StaticResource ButtonStyle}"/>
                 </StackLayout>
             </Frame>
 
@@ -66,25 +88,31 @@
                          Margin="5"  VerticalOptions="CenterAndExpand">
                 <RadioButton x:Name="Income"  Content="Income" CheckedChanged="RadioButton_CheckedChanged" IsChecked="True" 
                              BorderWidth="1"
-                             Padding="10"
+                             Padding="8"
                              BorderColor="{StaticResource PrimaryColor}"
                              CharacterSpacing="1.2"
                              BackgroundColor="White"
                              CornerRadius="10"
+                             HorizontalOptions="CenterAndExpand"
                              />
                 <RadioButton x:Name="Expense" Content="Expense" CheckedChanged="RadioButton_CheckedChanged"
                              BorderColor="{StaticResource PrimaryColor}"
                              BorderWidth="1"
-                             Padding="10"
+                             Padding="8"
                              CharacterSpacing="1.2"
                              BackgroundColor="White"
-                             CornerRadius="10"/>
+                             CornerRadius="10"
+                             HorizontalOptions="CenterAndExpand"/>
             </StackLayout>
-          
-                   
-                            <ListView BackgroundColor="Transparent" ItemsSource="{Binding Transactions}"
+
+            <Label Text="Note: Swipe from Right to Left on any transaction for more options"
+                   FontSize="10"
+                   HorizontalOptions="StartAndExpand" TextColor="Gray"/>
+
+
+            <ListView BackgroundColor="Transparent" ItemsSource="{Binding Transactions}"
                       HasUnevenRows="True"
-                      Margin="5"
+                      Margin="2"
                       SeparatorVisibility="Default"
                       SeparatorColor="Aqua"
                       VerticalOptions="CenterAndExpand"
@@ -92,8 +120,23 @@
                       >
                                 <ListView.ItemTemplate >
                                     <DataTemplate  x:DataType="model:Transaction">
-                                        <ViewCell >
-                                            <Frame CornerRadius="10"
+                        <ViewCell >
+
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Edit"
+                       BackgroundColor="{StaticResource PrimaryLight}"
+                                Invoked="SwipeItem_Invoked"
+                                                   CommandParameter="{Binding .}"/>
+                                        <SwipeItem Text="Delete"
+                       BackgroundColor="IndianRed"
+                                                   Invoked="SwipeItem_InvokedDelete"
+                                                   CommandParameter="{Binding .}"
+                       />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Frame CornerRadius="10"
                                    HasShadow="True"
                                    Margin="2"
                                    >
@@ -115,6 +158,7 @@
                                                VerticalOptions="Start" 
                                                FontAttributes="Bold"                            
                                                CharacterSpacing="1"
+                                               TextColor="Black"
                                                Grid.Column="1" Grid.Row="0"/>
 
                                     </Grid>
@@ -122,6 +166,7 @@
                                                 </StackLayout>
 
                                             </Frame>
+                            </SwipeView>
                                         </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

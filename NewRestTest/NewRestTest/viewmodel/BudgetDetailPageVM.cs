@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace NewRestTest.viewmodel
@@ -18,6 +19,11 @@ namespace NewRestTest.viewmodel
         INavigation navigation;
         int BudgetID;
         IRepository<Transaction> transactionRepo;
+
+        int SelectedTransactionType= 1;
+
+        public ICommand EditBudgetCommand { private set; get; }
+
 
         public ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();
         public ObservableCollection<Transaction> Transactions
@@ -76,43 +82,79 @@ namespace NewRestTest.viewmodel
             }
         }
 
+        private String remaining;
+        public String Remaining
+        {
+            get { return remaining; }
+            set
+            {
+                if (remaining != value)
+                {
+                    remaining = value;
+                    OnPropertyChanged("Remaining");
+                }
+            }
+        }
+
+        
         public BudgetDetailPageVM(int BudgetID, INavigation navigation)
         {
+            dbh = App.getMainDatabase;
             this.navigation = navigation;
             this.BudgetID = BudgetID;
-            dbh = App.getMainDatabase;
+            EditBudgetCommand = new MvvmHelpers.Commands.Command(EditBudget);
+
             transactionRepo = new Repository<Transaction>(dbh.Database);
-            //GetData(1);
+           
 
         }
 
+     
+        public async void EditBudget()
+        {
+            await navigation.PushAsync(new AddEditBudget(BudgetID));
+        }
         public async void GetData(int Type)
         {
+            SelectedTransactionType = Type;
             GetBudgetModelDetails();
             transactions = new ObservableCollection<Transaction>(
                 await transactionRepo.Get<Transaction>(t => t.BudgetId == BudgetID &&  t.Type == Type && t.Status == 1));
             OnPropertyChanged("Transactions");
-            AppSettings.MakeToast("Count For type "+Type+" is " + transactions.Count);
+            //AppSettings.MakeToast("Count For type "+Type+" is " + transactions.Count);
+        }
+
+        internal async void DeleteTransaction(Transaction tran)
+        {
+            IRepository<Transaction> tranRepo = new Repository<Transaction>(dbh.Database);
+
+            tran.Status = 0;
+            int result = await tranRepo.Update(tran);
+            AppSettings.MakeLog("BudgetDetailVM", "Result of transactio delete is " + result);
+            GetData(SelectedTransactionType);
+            AppSettings.MakeToast("Transaction Deleted Successfully");
+            
         }
 
         private async void GetBudgetModelDetails()
         {
-            AppSettings.MakeLog("Budget id detail is  ", "->" + BudgetID);
+            //AppSettings.MakeLog("Budget id detail is  ", "->" + BudgetID);
             List<BudgetListModel> budgetModel = await dbh.Database.QueryAsync<BudgetListModel>(
-               @"SELECT b.*,SUM(i.Amount) as TotalIncome,SUM(e.Amount) TotalExpense from
-                   budgets b LEFT JOIN transactions i on (b.BudgetId = i.BudgetId AND i.Type = 1)
-                    LEFT JOIN transactions e on (b.BudgetId = e.BudgetId AND e.Type = 2)
-                      where b.BudgetId = ? AND b.UserId = ? AND b.Status = 1
-                      group by b.BudgetId", new string[2] { BudgetID.ToString(),PrefManager.getUserID().ToString() });
+               @"SELECT b.*,
+COALESCE((SELECT SUM(Amount) from transactions where b.BudgetId = BudgetId AND Type = 1 AND Status = 1),0) as TotalIncome,
+COALESCE((SELECT SUM(Amount) from transactions where b.BudgetId = BudgetId AND Type = 2 AND Status = 1),0) TotalExpense 
+from budgets b where b.BudgetId = ? AND b.UserId = ? AND b.Status = 1", new string[2] { BudgetID.ToString(),PrefManager.getUserID().ToString() });
             if (budgetModel != null && budgetModel.Count>0)
             {
-                AppSettings.MakeLog("Budget detail is  ", "-> is not  null "+ budgetModel[0].Name);
+                //AppSettings.MakeLog("Budget detail is  ", "-> is not  null "+ budgetModel[0].Name);
                 budgetName = budgetModel[0].Name;
                 totalIncome = budgetModel[0].TotalIncome.ToString();
                 totalExpense = budgetModel[0].TotalExpense.ToString();
+                remaining = (budgetModel[0].TotalIncome - budgetModel[0].TotalExpense).ToString();
                 OnPropertyChanged("BudgetName");
                 OnPropertyChanged("TotalIncome");
                 OnPropertyChanged("TotalExpense");
+                OnPropertyChanged("Remaining");
             }
             else
             {
@@ -141,14 +183,8 @@ namespace NewRestTest.viewmodel
             }
         }
 
-        public async void AddNewTransaction()
+        public async void AddNewTransaction(ManageTransactionModel manageTransactionModel)
         {
-            ManageTransactionModel manageTransactionModel = new ManageTransactionModel
-            {
-                BudgetId = BudgetID,
-                TransactionId = 0,
-                Type = 1
-            };
             await navigation.PushAsync(new AddEditTransaction(manageTransactionModel));
         }
 

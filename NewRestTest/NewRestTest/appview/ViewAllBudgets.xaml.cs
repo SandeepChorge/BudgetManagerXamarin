@@ -23,8 +23,15 @@ namespace NewRestTest.appview
             BindingContext = model;
         }
 
-       
-        private void Button_Clicked(object sender, EventArgs e)
+        protected override void OnAppearing()
+        {
+            if (model != null)
+            {
+                model.AddTempData();
+            }
+        }
+
+            private void Button_Clicked(object sender, EventArgs e)
         {
             model.AddTempData();
         }
@@ -38,6 +45,5 @@ namespace NewRestTest.appview
             // Budget b = e.SelectedItem as Budget;
             Navigation.PushAsync(new BudgetDetailPage(b.BudgetId));
         }
-
     }
 }

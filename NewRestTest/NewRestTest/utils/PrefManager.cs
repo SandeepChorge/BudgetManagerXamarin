@@ -26,5 +26,15 @@ namespace NewRestTest.utils
         {
             return Preferences.Get("userID", 0);
         }
+
+        public static void setUserName(string UserName)
+        {
+            Preferences.Set("UserName", UserName);
+        }
+
+        public static string getUserName()
+        {
+            return Preferences.Get("UserName", "Lorem Ipsum");
+        }
     }
 }

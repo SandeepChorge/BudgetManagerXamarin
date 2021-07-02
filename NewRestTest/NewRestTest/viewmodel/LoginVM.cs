@@ -2,12 +2,9 @@
 using NewRestTest.database;
 using NewRestTest.model;
 using NewRestTest.utils;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace NewRestTest.viewmodel
@@ -117,7 +114,7 @@ namespace NewRestTest.viewmodel
 
         public void SignUp()
         {
-            Application.Current.MainPage = new RegisterUser();
+            Application.Current.MainPage = new RegisterUser(0);
         }
 
     }

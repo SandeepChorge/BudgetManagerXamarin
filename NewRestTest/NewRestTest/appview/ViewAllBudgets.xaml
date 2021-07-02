@@ -5,7 +5,8 @@
              xmlns:model="clr-namespace:NewRestTest.model" 
              xmlns:converters="clr-namespace:NewRestTest.converter" 
              x:DataType="viewmodel:ViewAllBudgetsVM"
-             x:Class="NewRestTest.appview.ViewAllBudgets">
+             x:Class="NewRestTest.appview.ViewAllBudgets"
+             Title="View All Budgets">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -14,9 +15,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Budgets List"
-                />
-
+            
 <!--
             <Button Text="Add temp data"
                     Clicked="Button_Clicked"/>
@@ -29,6 +28,7 @@
                       VerticalOptions="CenterAndExpand"
 HorizontalOptions="CenterAndExpand"
                       ItemTapped="ListView_ItemTapped"
+                      
                       >
 
                 <ListView.ItemTemplate >

@@ -19,12 +19,12 @@ namespace NewRestTest.appview
 	{
 
         MainDB dbh;
-       
-        public RegisterUser()
+        int from;
+        public RegisterUser(int from)
 		{
+            this.from = from;
 			InitializeComponent ();
             dbh = App.getMainDatabase;
-           
             BindingContext = this;
             
 		}
@@ -81,18 +81,19 @@ namespace NewRestTest.appview
                     AppSettings.MakeToast("User added successfully");
                     //Application.Current.MainPage = new NavigationPage(new LoginPage());
                     Debug.WriteLine("Insert Result is " + val);
+                    if(from == 0) { 
                     Application.Current.MainPage = new LoginPage();
+                    }
+                    else
+                    {
+                        Navigation.PopAsync();
+                    }
                 }
             }
         }
 
         //Removed this method
-        private void LoginPageRedirect(object sender, EventArgs e)
-        {
-            Application.Current.MainPage = new NavigationPage(new LoginPage());
-
-            
-        }
+      
 
         private Boolean ValidateRegistrationFields()
         {

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NewRestTest.appview.ManageUsers"
+             xmlns:viewmodel="clr-namespace:NewRestTest.viewmodel" 
+             xmlns:model="clr-namespace:NewRestTest.model" 
+             Title="Manage Users">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView BackgroundColor="Transparent" ItemsSource="{Binding Users}"
+                      HasUnevenRows="True"
+                      Margin="5"
+                      SeparatorVisibility="Default"
+                      SeparatorColor="Aqua"
+                      VerticalOptions="CenterAndExpand"
+                      HorizontalOptions="CenterAndExpand"
+                      >
+                <ListView.ItemTemplate >
+                    <DataTemplate  x:DataType="model:UserModel">
+                        <ViewCell >
+                            <Frame CornerRadius="10"
+                                   HasShadow="True"
+                                   Margin="2"
+                                   >
+                                <StackLayout>
+                                    <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" TextColor="{StaticResource PrimaryTextColor2}" 
+                                            FontSize="20"
+                                            CharacterSpacing="1"/>
+                                    <Label  Text="{Binding Email}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" TextColor="{StaticResource PrimaryTextColor2}" 
+                                       FontSize="10"
+                                       />
+                                    <Label  Text="{Binding MobileNumber}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" TextColor="{StaticResource PrimaryTextColor2}" 
+                                       FontSize="10"
+                                       />
+                                    <Label  Text="{Binding Gender}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" TextColor="{StaticResource PrimaryTextColor2}" 
+                                       FontSize="10"
+                                       />
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

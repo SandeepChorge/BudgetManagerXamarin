@@ -20,6 +20,7 @@ namespace NewRestTest
         {
             InitializeComponent();
             //dbRepo = new MainDB(dbPath);
+            //AppSettings.MakeLog("APP_MAIN_XAML", "DB_PATH_IS " + dbPath);
             MainPage = new SplashPage();
             //MainPage = new ViewAllBudgets();
             //MainPage = new BudgetDetailPage(1);
